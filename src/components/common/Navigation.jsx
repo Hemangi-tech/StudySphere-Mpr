@@ -1,10 +1,8 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Menu,
   X,
-  MessageSquare,
   User,
   Settings,
   LogOut,
@@ -29,12 +27,11 @@ export const Navigation = () => {
     { name: "Dashboard", href: "/dashboard" },
     { name: "Reminders", href: "/reminders" },
     { name: "Upload Notes", href: "/upload-notes" },
-    { name: "Q&A Forum", href: "/qna" },
   ];
 
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
-  });
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
 
   useEffect(() => {
     const root = document.documentElement;
@@ -79,8 +76,9 @@ export const Navigation = () => {
     <nav className="bg-white/95 dark:bg-gray-900 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-500 rounded-lg flex items-center justify-center gap-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-500 rounded-lg flex items-center justify-center">
               <GraduationCap className="w-8 h-8 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
@@ -88,7 +86,9 @@ export const Navigation = () => {
             </span>
           </Link>
 
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            {/* Other nav items */}
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -102,25 +102,32 @@ export const Navigation = () => {
                 {item.name}
               </Link>
             ))}
+
+            {/* Q&A Forum always visible */}
+            <Link
+              to="/qna"
+              className={`text-sm font-medium transition-colors duration-200 ${
+                isActive("/qna")
+                  ? "text-blue-600"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+              }`}
+            >
+              Q&A Forum
+            </Link>
           </div>
 
-          <div className="flex items-center space-x-2 gap-3">
+          {/* Right-side Buttons */}
+          <div className="flex items-center space-x-3">
             {!isAuthenticated && (
               <div className="hidden md:block">
                 <Link to="/sign-in">
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button variant="outline" size="sm">
                     <User className="w-4 h-4 mr-2" />
                     Login
                   </Button>
                 </Link>
               </div>
             )}
-
-            <div className="hidden md:flex">
-              <Link to="/dashboard">
-                <Button size="sm">Start Chatting</Button>
-              </Link>
-            </div>
 
             {isAuthenticated && (
               <div className="relative" ref={profileRef}>
@@ -138,10 +145,7 @@ export const Navigation = () => {
                 </button>
 
                 {isProfileMenuOpen && (
-                  <div
-                    role="menu"
-                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-100 dark:border-gray-700 py-2 z-50"
-                  >
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-100 dark:border-gray-700 py-2 z-50">
                     <Link
                       to="/my-profile"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
@@ -189,28 +193,38 @@ export const Navigation = () => {
               </div>
             )}
 
-            {/* Hamburger stays for mobile menu */}
+            {/* Hamburger for mobile */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline-none"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden pb-4">
             <div className="space-y-2">
+              {/* Q&A always visible */}
+              <Link
+                to="/qna"
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  isActive("/qna")
+                    ? "text-blue-600 bg-blue-50 dark:bg-gray-700"
+                    : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Q&A Forum
+              </Link>
+
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
                     isActive(item.href)
                       ? "text-blue-600 bg-blue-50 dark:bg-gray-700"
                       : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -231,27 +245,13 @@ export const Navigation = () => {
                   </Button>
                 </Link>
               )}
-              <Link to="/chat" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button size="sm" className="w-full">
-                  Start Chatting
-                </Button>
-              </Link>
-              {/* <button
-                onClick={() => setDarkMode(!darkMode)}
-                className="flex w-full items-center px-3 py-2 gap-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
-              >
-                {darkMode ? (
-                  <>
-                    <Sun className="w-4 h-4 text-gray-500 dark:text-gray-400" />{" "}
-                    Light
-                  </>
-                ) : (
-                  <>
-                    <Moon className="w-4 h-4 text-gray-500 dark:text-gray-400" />{" "}
-                    Dark
-                  </>
-                )}
-              </button> */}
+              {isAuthenticated && (
+                <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button size="sm" className="w-full">
+                    Start Chatting
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}
