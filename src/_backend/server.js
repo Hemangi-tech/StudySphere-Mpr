@@ -54,5 +54,5 @@ app.post("/api/chat", async (req, res) => {
 
 // Start server
 app.listen(3000, () =>
-  console.log("✅ Server running on http://localhost:3000/chat")
+  console.log("✅ Server running on https://study-sphere-mpr-idr9.vercel.app/chat")
 );
