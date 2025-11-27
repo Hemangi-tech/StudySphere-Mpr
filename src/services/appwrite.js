@@ -17,6 +17,7 @@ export class Services {
     this.storage = new Storage(this.client);
   }
 
+
   //================CREATES A ACCOUNT FOR USER=================
   async createAccount({ email, password, name, phoneNumber }) {
     try {
@@ -41,8 +42,9 @@ export class Services {
   }
 
   //===========ADD USER TO DB=============
-  async addUser(userId, name, email, phoneNumber) {
+  async addUser(userId, name, email) {
     try {
+      // console.log(phoneNumber)
       const response = await this.databases.createDocument(
         config.appwriteDatabaseID,
         config.appwriteUsersCollectionID,
@@ -50,7 +52,6 @@ export class Services {
         {
           name,
           email,
-          phoneNumber,
           userId: userId,
         }
       );
@@ -90,8 +91,8 @@ export class Services {
     try {
       this.account.createOAuth2Session(
         "github",
-        "https://m723x5-5173.csb.app/",
-        "https://m723x5-5173.csb.app/sign-in"
+        "https://study-sphere-private.vercel.app/",
+        "https://study-sphere-private.vercel.app/sign-in"
       );
     } catch (error) {
       console.log("Error logging in github: ", error);

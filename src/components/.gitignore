@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+
+# Build/output folders
+dist/
+build/
+.next/
+
+# Environment files
+.env
+.env.local
+
+# VS Code settings
+.vscode/
+
+# Mac system files
+.DS_Store

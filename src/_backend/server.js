@@ -6,14 +6,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 console.log(
   "Google API Key Loaded:",
-  process.env.GOOGLE_API_KEY ? "✅ Yes" : "❌ No"
+  process.env.GEMINI_API_KEY ? "✅ Yes" : "❌ No"
 );
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const ai = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post("/api/chat", async (req, res) => {
   try {
@@ -54,5 +54,5 @@ app.post("/api/chat", async (req, res) => {
 
 // Start server
 app.listen(3000, () =>
-  console.log("✅ Server running on https://study-sphere-jet.vercel.app/")
+  console.log("✅ Server running on http://localhost:3000/chat")
 );
