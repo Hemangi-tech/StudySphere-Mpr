@@ -62,13 +62,12 @@ StudySphere is a comprehensive study assistance platform designed to help studen
 ---
 
 ## 🛠️ Tech Stack
-*(You can update this section as per your implementation)*
 
-- **Frontend:** HTML, CSS, JavaScript / React
+- **Frontend:**JavaScript,Reactjs
 - **Backend:** Node.js, Express
-- **Database:** SQL / MongoDB / Firebase
+- **Database:** SQL
 - **Authentication:** Google OAuth, GitHub OAuth
-- **Chatbot:** AI-powered assistant (StudyGenie)
+- **Chatbot:** Using Gemini api (StudyGenie)
 
 ---
 
